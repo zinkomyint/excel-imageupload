@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="text-center">All Books</h3><br/>
-         <download-excel
+         <download-excel style="margin-left:-12px;"
             class="btn btn-default"
             :data="json_data"
             :fields="json_fields"
@@ -21,9 +21,11 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+              <th>ID</th>
+                <th><input type="checkbox" id="name" value="name" v-model="checkedNames">Name</th>
                 <th>Author</th>
+                <th>Gender</th>
+                <th>Model</th>
                 <th>Image</th>
                 <th>Created At</th>
                 <th>Updated At</th>
@@ -35,6 +37,8 @@
                 <td>{{ book.id }}</td>
                 <td>{{ book.name }}</td>
                 <td>{{ book.author }}</td>
+                <td>{{ book.gender }}</td>
+                <td>{{ book.model }}</td>
                 <td><img :src="urlPath + book.image" alt="image" class="img-thumbnail" width="75"/></td>
                 <td>{{ book.created_at }}</td>
                 <td>{{ book.updated_at }}</td>
@@ -42,12 +46,13 @@
                     <div class="btn-group" role="group">
                         <router-link :to="{name: 'edit', params: { id: book.id }}" class="btn btn-primary">Edit
                         </router-link>
-                        <button class="btn btn-danger" @click="deleteBook(book.id)">Delete</button>
+                        <button class="btn btn-danger" @click="deleteBook(book.id)" style="margin-left: 3px;">Delete</button>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
+        <span>Checked names: {{ checkedNames | json }}</span>
     </div>
 </template>
 
@@ -60,13 +65,17 @@ Vue.component('downloadExcel', JsonExcel)
     export default {
         data() {
             return {
+                checkedNames: [],
                 urlPath: "http://localhost:8000/images/",
                 books: [],
                 json_fields: {
                 Id: "id",
                 Name: "name",
-                Author: "author"
+                Author: "author",
+                Gender: "gender",
+                Image: "image"
             },
+               
             json_data: [],
             json_meta: [
                 [
@@ -100,6 +109,7 @@ Vue.component('downloadExcel', JsonExcel)
                 .get('http://localhost:8000/api/book/export')
                 .then(response => {
                     this.json_data = response.data;
+
                 });
             }
         }

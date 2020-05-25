@@ -22,14 +22,29 @@ class BookController extends Controller
     // add book
     public function add(Request $request)
     {
-        $extension = $request->image->getClientOriginalExtension();
-        $image = date("Y-m-d").time().'.'.$extension;
-        $request->image->move(public_path('images'), $image);
-
+        if($request->hasFile('image'))
+        {
+            $extension = $request->image->getClientOriginalExtension();
+            $image = date("Y-m-d").time().'.'.$extension;
+            $request->image->move(public_path('images'), $image);
+        }else
+        {
+            $image = "";
+        }
+    
         $book = new Book([
             'name' => $request->input('name'),
             'author' => $request->input('author'),
+            'gender' => $request->input('gender'),
+            'model' => $request->input('model'),
             'image' => $image
+
+            // 'name' => 'required',
+            // 'author' => 'required',
+            // 'gender' => 'required',
+            // 'model' => 'required',
+            // 'image' => 'required'
+
         ]);
         $book->save();
 
@@ -47,8 +62,44 @@ class BookController extends Controller
     public function update($id, Request $request)
     {
         
+        if($request->hiddenImage == "")
+        {
+            if($request->hasFile('image'))
+            {
+                $extension = $request->image->getClientOriginalExtension();
+                $image = date("Y-m-d").time().'.'.$extension;
+                $request->image->move(public_path('images'), $image);
+            }else
+            {
+                $image = "";
+            }
+        }
+        
+    else
+    {
+        if($request->hasFile('image'))
+        {
+            $extension = $request->image->getClientOriginalExtension();
+            $image = date("Y-m-d").time().'.'.$extension;
+            $request->image->move(public_path('images'), $image);
+        }
+        else
+        {
+            $image = $request->hiddenImage;
+        }
+    }
+
         $book = Book::find($id);
-        $book->update($request->all());
+        $book->name   = $request->input('name');
+        $book->author = $request->input('author');
+        $book->gender = $request->input('gender');
+        $book->model = $request->input('model');
+        $book->image  = $image;
+
+        $book->save();
+
+        // $book = Book::find($id);
+        // $book->update($request->all());
 
         return response()->json('The book successfully updated');
     }
@@ -78,4 +129,5 @@ class BookController extends Controller
         $books = Book::all();
         return response()->json($books);
     }
+    
 }

@@ -1966,17 +1966,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      book: {}
+      checkedmodel: [],
+      book: {},
+      urlPath: "http://localhost:8000/images/",
+      url: null
     };
   },
   methods: {
+    onFileChange: function onFileChange(e) {
+      var file = e.target.files[0];
+      this.url = URL.createObjectURL(file);
+    },
     changeImage: function changeImage(e) {
       console.log(e.target.files[0]);
       var fileName = e.target.files[0];
       this.$set(this.book, "image", fileName);
+    },
+    checkForm: function checkForm(e) {
+      if (this.name && this.author && this.gender && this.model) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('Name required.');
+      }
+
+      if (!this.author) {
+        this.errors.push('Age required.');
+      }
+
+      if (!this.gender) {
+        this.errors.push('Age required.');
+      }
+
+      if (!this.model) {
+        this.errors.push('Age required.');
+      }
+
+      e.preventDefault();
     },
     addBook: function addBook() {
       var _this = this;
@@ -1986,9 +2049,12 @@ __webpack_require__.r(__webpack_exports__);
           'content-type': 'multipart/form-data'
         }
       };
+      this.book.model = this.checkedmodel;
       var formData = new FormData();
       formData.append('name', this.book.name);
       formData.append('author', this.book.author);
+      formData.append('gender', this.book.gender);
+      formData.append('model', this.book.model);
       formData.append('image', this.book.image);
       this.axios.post("http://localhost:8000/api/book/add", formData, config).then(function (response) {
         return _this.$router.push({
@@ -2071,18 +2137,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('downloadExcel', vue_json_excel__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      checkedNames: [],
       urlPath: "http://localhost:8000/images/",
       books: [],
       json_fields: {
         Id: "id",
         Name: "name",
-        Author: "author"
+        Author: "author",
+        Gender: "gender",
+        Image: "image"
       },
       json_data: [],
       json_meta: [[{
@@ -2158,32 +2232,105 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      checkedmodel: [],
+      book: {},
       urlPath: "http://localhost:8000/images/",
-      book: {}
+      url: null
     };
   },
   created: function created() {
     var _this = this;
 
     this.axios.get("http://localhost:8000/api/book/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.book = response.data; // console.log(response.data);
+      _this.book = response.data;
+      console.log(response.data);
+      _this.checkedmodel = response.data.model.split(",");
+      var hiddenImage;
+
+      if (_this.book.image) {
+        hiddenImage = _this.book.image;
+      } else {
+        hiddenImage = "";
+      }
+
+      _this.$set(_this.book, "hiddenImage", hiddenImage);
     });
   },
+  computed: {
+    getUploadedImage: function getUploadedImage() {
+      return this.urlPath + this.book.image;
+    }
+  },
   methods: {
+    onFileChange: function onFileChange(e) {
+      var file = e.target.files[0];
+      this.url = URL.createObjectURL(file);
+    },
     changeImage: function changeImage(e) {
-      console.log(e.target.files[0]);
       var fileName = e.target.files[0];
       this.$set(this.book, "image", fileName);
     },
     updateBook: function updateBook() {
       var _this2 = this;
 
-      this.axios.post("http://localhost:8000/api/book/update/".concat(this.$route.params.id), this.book).then(function (response) {
+      // this.axios
+      //   .post(
+      //     `http://localhost:8000/api/book/update/${this.$route.params.id}`,
+      //     this.book
+      //   )
+      //   .then(response => {
+      //     this.$router.push({ name: "home" });
+      //   });
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      this.book.model = this.checkedmodel;
+      var formData = new FormData();
+      formData.append('name', this.book.name);
+      formData.append('author', this.book.author);
+      formData.append('gender', this.book.gender);
+      formData.append('model', this.book.model);
+      formData.append('image', this.book.image);
+      formData.append('hiddenImage', this.book.hiddenImage);
+      this.axios.post("http://localhost:8000/api/book/update/".concat(this.$route.params.id), formData, config).then(function (response) {
         _this2.$router.push({
-          name: 'home'
+          name: "home"
         });
       });
     }
@@ -38489,13 +38636,6 @@ var staticRenderFns = [
         staticStyle: { margin: "20px 0px 20px 0px" }
       },
       [
-        _c(
-          "a",
-          { attrs: { href: "https://www.mynotepaper.com/", target: "_blank" } },
-          [_c("img", { attrs: { src: "https://i.imgur.com/hHZjfUq.png" } })]
-        ),
-        _c("br"),
-        _vm._v(" "),
         _c("span", { staticClass: "text-secondary" }, [
           _vm._v("Laravel & Vue CRUD Single Page Application (SPA) Tutorial")
         ])
@@ -38534,10 +38674,13 @@ var render = function() {
           {
             attrs: { enctype: "multipart/form-data" },
             on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.addBook($event)
-              }
+              submit: [
+                function($event) {
+                  $event.preventDefault()
+                  return _vm.addBook($event)
+                },
+                _vm.checkForm
+              ]
             }
           },
           [
@@ -38596,11 +38739,168 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _c("label", [_vm._v("Image")]),
               _vm._v(" "),
+              _c("img", {
+                staticClass: "preview",
+                attrs: { src: _vm.imageData }
+              }),
+              _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
                 attrs: { type: "file" },
-                on: { change: _vm.changeImage }
-              })
+                on: { change: [_vm.changeImage, _vm.onFileChange] }
+              }),
+              _c("br"),
+              _vm._v(" "),
+              _vm.url
+                ? _c("img", { attrs: { src: _vm.url, width: "20%" } })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "male", value: "male" },
+                domProps: { checked: _vm._q(_vm.book.gender, "male") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "male")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "male" } }, [_vm._v("male")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "female", value: "female" },
+                domProps: { checked: _vm._q(_vm.book.gender, "female") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "female")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "female" } }, [_vm._v("female")]),
+              _vm._v(" "),
+              _c("br")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "pakainfo form-check-label gst",
+                  attrs: { for: "2WD" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedmodel,
+                        expression: "checkedmodel"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox", id: "2WD", value: "2WD" },
+                    domProps: {
+                      checked: Array.isArray(_vm.checkedmodel)
+                        ? _vm._i(_vm.checkedmodel, "2WD") > -1
+                        : _vm.checkedmodel
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checkedmodel,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "2WD",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.checkedmodel = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.checkedmodel = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v("            \n          2WD\n      ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "pakainfo form-check-label gst",
+                  staticStyle: { "margin-left": "25px" },
+                  attrs: { for: "4WD" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedmodel,
+                        expression: "checkedmodel"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox", id: "4WD", value: "4WD" },
+                    domProps: {
+                      checked: Array.isArray(_vm.checkedmodel)
+                        ? _vm._i(_vm.checkedmodel, "4WD") > -1
+                        : _vm.checkedmodel
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checkedmodel,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "4WD",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.checkedmodel = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.checkedmodel = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v("            \n          4WD\n        ")
+                ]
+              )
             ]),
             _vm._v(" "),
             _c(
@@ -38646,6 +38946,7 @@ var render = function() {
         "download-excel",
         {
           staticClass: "btn btn-default",
+          staticStyle: { "margin-left": "-12px" },
           attrs: {
             data: _vm.json_data,
             fields: _vm.json_fields,
@@ -38667,7 +38968,66 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("table", { staticClass: "table table-bordered" }, [
-        _vm._m(0),
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v("ID")]),
+            _vm._v(" "),
+            _c("th", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.checkedNames,
+                    expression: "checkedNames"
+                  }
+                ],
+                attrs: { type: "checkbox", id: "name", value: "name" },
+                domProps: {
+                  checked: Array.isArray(_vm.checkedNames)
+                    ? _vm._i(_vm.checkedNames, "name") > -1
+                    : _vm.checkedNames
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.checkedNames,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "name",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.checkedNames = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.checkedNames = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.checkedNames = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v("Name")
+            ]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Author")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Gender")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Model")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Image")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Created At")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Updated At")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Actions")])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
@@ -38678,6 +39038,10 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(book.name))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(book.author))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.gender))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.model))]),
               _vm._v(" "),
               _c("td", [
                 _c("img", {
@@ -38712,6 +39076,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-danger",
+                        staticStyle: { "margin-left": "3px" },
                         on: {
                           click: function($event) {
                             return _vm.deleteBook(book.id)
@@ -38728,35 +39093,16 @@ var render = function() {
           }),
           0
         )
+      ]),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v("Checked names: " + _vm._s(_vm._f("json")(_vm.checkedNames)))
       ])
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Author")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Image")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Created At")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Updated At")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38786,6 +39132,7 @@ var render = function() {
         _c(
           "form",
           {
+            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -38846,26 +39193,178 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("p", { staticStyle: { "margin-top": "-3px" } }, [
-              _vm._v("Image")
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Image")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
               _c("img", {
-                staticClass: "img-thumbnail",
-                attrs: {
-                  src: _vm.urlPath + _vm.book.image,
-                  alt: "image",
-                  width: "75"
-                }
+                staticClass: "preview",
+                attrs: { src: _vm.imageData }
               }),
               _vm._v(" "),
               _c("input", {
-                staticClass: "form-control",
-                staticStyle: { "margin-top": "12px" },
                 attrs: { type: "file" },
-                on: { change: _vm.changeImage }
-              })
+                on: { change: [_vm.changeImage, _vm.onFileChange] }
+              }),
+              _vm._v(" "),
+              _vm.url
+                ? _c("img", { attrs: { src: _vm.url, width: "20%" } })
+                : _c("img", {
+                    staticClass: "img-thumbnail",
+                    attrs: {
+                      src: _vm.urlPath + _vm.book.image,
+                      alt: "image",
+                      width: "100"
+                    }
+                  })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "male", value: "male" },
+                domProps: { checked: _vm._q(_vm.book.gender, "male") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "male")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "male" } }, [_vm._v("male")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "female", value: "female" },
+                domProps: { checked: _vm._q(_vm.book.gender, "female") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "female")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "female" } }, [_vm._v("female")]),
+              _vm._v(" "),
+              _c("br")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "pakainfo form-check-label gst",
+                  attrs: { for: "2WD" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedmodel,
+                        expression: "checkedmodel"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox", id: "2WD", value: "2WD" },
+                    domProps: {
+                      checked: Array.isArray(_vm.checkedmodel)
+                        ? _vm._i(_vm.checkedmodel, "2WD") > -1
+                        : _vm.checkedmodel
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checkedmodel,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "2WD",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.checkedmodel = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.checkedmodel = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v("            \n          2WD\n      ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "pakainfo form-check-label gst",
+                  staticStyle: { "margin-left": "25px" },
+                  attrs: { for: "4WD" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedmodel,
+                        expression: "checkedmodel"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox", id: "4WD", value: "4WD" },
+                    domProps: {
+                      checked: Array.isArray(_vm.checkedmodel)
+                        ? _vm._i(_vm.checkedmodel, "4WD") > -1
+                        : _vm.checkedmodel
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checkedmodel,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "4WD",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.checkedmodel = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.checkedmodel = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v("            \n          4WD\n        ")
+                ]
+              )
             ]),
             _vm._v(" "),
             _c(
@@ -54579,8 +55078,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuejs_test4_excel\my_porject\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuejs_test4_excel\my_porject\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\laraval-vuejs\excel-imageupload\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\laraval-vuejs\excel-imageupload\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
