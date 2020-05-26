@@ -22,6 +22,16 @@ class BookController extends Controller
     // add book
     public function add(Request $request)
     {
+      
+
+        $request->validate([
+            'name' => 'required',
+            'author' => 'required',
+            'image' => 'required',
+            'gender' => 'required',
+            'model' => 'required',
+        ]);
+
         if($request->hasFile('image'))
         {
             $extension = $request->image->getClientOriginalExtension();
@@ -31,7 +41,10 @@ class BookController extends Controller
         {
             $image = "";
         }
-    
+
+        
+        
+        
         $book = new Book([
             'name' => $request->input('name'),
             'author' => $request->input('author'),
@@ -39,16 +52,12 @@ class BookController extends Controller
             'model' => $request->input('model'),
             'image' => $image
 
-            // 'name' => 'required',
-            // 'author' => 'required',
-            // 'gender' => 'required',
-            // 'model' => 'required',
-            // 'image' => 'required'
-
         ]);
         $book->save();
+        return response()->json(['success'=>'Done!']);
+    
 
-        return response()->json('The book successfully added');
+        // return response()->json('The book successfully added');
     }
 
     // edit book

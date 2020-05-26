@@ -60,13 +60,7 @@ export default {
   data() {
     return {
       checkedmodel:[],
-       book: {
-           name : '',
-           author : '',
-           image : '',
-           gender : '',
-           model : '',
-           },
+      book: {},
       urlPath: "http://localhost:8000/images/",
        url: null,
     };
