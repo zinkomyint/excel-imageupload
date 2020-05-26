@@ -2007,7 +2007,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       checkedmodel: [],
-      book: {},
+      book: {
+        name: '',
+        author: '',
+        gender: '',
+        image: '',
+        model: ''
+      },
       allerros: [],
       success: false,
       urlPath: "http://localhost:8000/images/",
