@@ -2038,11 +2038,17 @@ __webpack_require__.r(__webpack_exports__);
       focus_author: false,
       focus_image: false,
       focus_model: false,
+      btn_disable: false,
       allerros: [],
       success: false,
       urlPath: "http://localhost:8000/images/",
       url: null
     };
+  },
+  computed: {
+    isdisable: function isdisable() {
+      return !this.btn_disable;
+    }
   },
   methods: {
     onFileChange: function onFileChange(e) {
@@ -2056,39 +2062,47 @@ __webpack_require__.r(__webpack_exports__);
     },
     focusName: function focusName(event) {
       if (this.book.name != '') {
-        this.focus_name = false; // this.aggreBtn();
+        this.focus_name = false;
+        this.aggreBtn();
       } else {
-        this.focus_name = true; // this.btn_disable = true;
+        this.focus_name = true;
+        this.btn_disable = true;
       }
     },
     focusauthor: function focusauthor(event) {
       if (this.book.author != '') {
-        this.focus_author = false; // this.aggreBtn();
+        this.focus_author = false;
+        this.aggreBtn();
       } else {
-        this.focus_author = true; // this.btn_disable = true;
+        this.focus_author = true;
+        this.btn_disable = true;
       }
     },
     focusimage: function focusimage(event) {
       if (this.book.image != '') {
-        this.focus_image = false; // this.aggreBtn();
+        this.focus_image = false;
+        this.aggreBtn();
       } else {
-        this.focus_image = true; // this.btn_disable = true;
+        this.focus_image = true;
+        this.btn_disable = true;
       }
     },
     focusmodel: function focusmodel(event) {
       if (this.book.model != '') {
-        this.focus_model = false; // this.aggreBtn();
+        this.focus_model = false;
+        this.aggreBtn();
       } else {
-        this.focus_model = true; // this.btn_disable = true;
+        this.focus_model = true;
+        this.btn_disable = true;
       }
     },
-    //   aggreBtn: function(){
-    //     if((this.book.name != '')){
-    //         this.btn_disable=false;
-    //     }else{
-    //         this.btn_disable=true;
-    //     }
-    // }, 
+    aggreBtn: function aggreBtn() {
+      if (this.book.name != '' && this.book.author != '' && this.book.gender != '' && this.book.model != '' & this.book.image != '') {
+        this.btn_disable = false;
+      } else {
+        this.btn_disable = true;
+      }
+    },
     addBook: function addBook() {
       var _this = this;
 
@@ -6942,7 +6956,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.tt[data-v-14e7738f]{\n  color: red;\n}\n.nn[data-v-14e7738f]{\n  margin-left: 20px;\n  margin-top: 7px;\n}\n.star[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  position: absolute;\n}\n.star2[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  /* position: absolute; */\n}\n", ""]);
+exports.push([module.i, "\n.tt[data-v-14e7738f]{\n  color: red;\n}\n.nn[data-v-14e7738f]{\n  margin-left: 20px;\n  margin-top: 7px;\n}\n.star[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  position: absolute;\n}\n.star2[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  /* position: absolute; */\n}\n.ff[data-v-14e7738f]{\n  border: 1px solid #4f5c695e;\n  padding: 31px;\n  border-radius: 7px;\n}\n", ""]);
 
 // exports
 
@@ -39457,6 +39471,7 @@ var render = function() {
         _c(
           "form",
           {
+            staticClass: "ff",
             attrs: {
               enctype: "multipart/form-data",
               method: "POST",
@@ -39490,6 +39505,7 @@ var render = function() {
                 on: {
                   focusout: _vm.focusName,
                   keyup: _vm.focusName,
+                  change: _vm.aggreBtn,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -39526,6 +39542,7 @@ var render = function() {
                 on: {
                   focusout: _vm.focusauthor,
                   keyup: _vm.focusauthor,
+                  change: _vm.aggreBtn,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -39585,9 +39602,12 @@ var render = function() {
                 attrs: { type: "radio", id: "male", value: "male" },
                 domProps: { checked: _vm._q(_vm.book.gender, "male") },
                 on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.book, "gender", "male")
-                  }
+                  change: [
+                    function($event) {
+                      return _vm.$set(_vm.book, "gender", "male")
+                    },
+                    _vm.aggreBtn
+                  ]
                 }
               }),
               _vm._v(" "),
@@ -39607,9 +39627,12 @@ var render = function() {
                 attrs: { type: "radio", id: "female", value: "female" },
                 domProps: { checked: _vm._q(_vm.book.gender, "female") },
                 on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.book, "gender", "female")
-                  }
+                  change: [
+                    function($event) {
+                      return _vm.$set(_vm.book, "gender", "female")
+                    },
+                    _vm.aggreBtn
+                  ]
                 }
               }),
               _vm._v(" "),
@@ -39659,25 +39682,29 @@ var render = function() {
                       },
                       on: {
                         click: _vm.focusmodel,
-                        change: function($event) {
-                          var $$a = _vm.checkedmodel,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = "2WD",
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                        change: [
+                          function($event) {
+                            var $$a = _vm.checkedmodel,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = "2WD",
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.checkedmodel = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.checkedmodel = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
                             } else {
-                              $$i > -1 &&
-                                (_vm.checkedmodel = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
+                              _vm.checkedmodel = $$c
                             }
-                          } else {
-                            _vm.checkedmodel = $$c
-                          }
-                        }
+                          },
+                          _vm.aggreBtn
+                        ]
                       }
                     }),
                     _vm._v("            \n          2WD\n      ")
@@ -39696,7 +39723,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button", disabled: _vm.isdisable }
+              },
               [_vm._v("追加ボタン")]
             )
           ]

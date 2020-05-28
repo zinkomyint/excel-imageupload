@@ -3,18 +3,18 @@
     <h3 class="text-center">ページを追加</h3>
     <div class="row">
       <div class="col-md-6">
-        <form @submit.prevent="addBook" enctype="multipart/form-data" method="POST" autocomplete="off">
+        <form @submit.prevent="addBook" enctype="multipart/form-data" method="POST" autocomplete="off" class="ff">
           <p class="star">*</p>
           <div class="form-group">
             <label class="nn">Name</label>
-            <input type="text" class="form-control" v-model="book.name" id="name" @focusout="focusName" @keyup="focusName"/>
+            <input type="text" class="form-control" v-model="book.name" id="name" @focusout="focusName" @keyup="focusName"  @change="aggreBtn"/>
               <!-- <span v-if="allerros.name" class="tt">Name is required</span> -->
                <span class="error m-l-30 tt" v-if="focus_name">※入力は必須です。</span>
           </div>
             <p class="star">*</p>
           <div class="form-group">
             <label class="nn">Author</label>
-            <input type="text" class="form-control" v-model="book.author" id="author" @focusout="focusauthor" @keyup="focusauthor"/>
+            <input type="text" class="form-control" v-model="book.author" id="author" @focusout="focusauthor" @keyup="focusauthor"  @change="aggreBtn"/>
               <!-- <span v-if="allerros.author" class="tt">Author is required</span> -->
                <span class="error m-l-30 tt" v-if="focus_author">※入力は必須です。</span>
           </div>
@@ -22,17 +22,17 @@
           <div class="form-group">
             <label class="nn">Image</label>
             <!-- <img class="preview" :src="imageData"> -->
-            <input type="file" class="form-control" v-on:change="changeImage" @change="onFileChange" id="image" @focusout="focusimage" @keyup="focusimage"/><br>
-            <img v-if="url" :src="url" width="20%" /><br>
+            <input type="file" class="form-control" v-on:change="changeImage" @change="onFileChange" id="image" @focusout="focusimage" @keyup="focusimage" /><br>
+            <img v-if="url" :src="url" width="20%"/><br>
              <!-- <span v-if="allerros.image" class="tt">image is required</span> -->
                    <span class="error m-l-30 tt" v-if="focus_image">※入力は必須です。</span>
           </div>
         <p class="star2">*</p>
        <div class="form-group">
-          <input type="radio" id="male" value="male" v-model="book.gender">
+          <input type="radio" id="male" value="male" v-model="book.gender"  @change="aggreBtn">
             <label for="male">male</label>
                 <br>
-          <input type="radio" id="female" value="female" v-model="book.gender">
+          <input type="radio" id="female" value="female" v-model="book.gender"  @change="aggreBtn">
             <label for="female">female</label>
 
                 <span v-if="allerros.gender" class="tt"><br>※入力は必須です。</span> 
@@ -46,7 +46,7 @@
                     id="2WD" 
                     class="form-check-input"
                     value="2WD" 
-                    v-model="checkedmodel" @click="focusmodel"/>            
+                    v-model="checkedmodel" @click="focusmodel" @change="aggreBtn"/>            
             2WD
         </label>
              <!-- <label for="4WD" class="pakainfo form-check-label gst" style="margin-left:25px">
@@ -54,7 +54,7 @@
                     id="model" 
                     class="form-check-input"
                     value="4WD" 
-                    v-model="checkedmodel"  @focusout="focusmodel" @keyup="focusmodel"/>            
+                    v-model="checkedmodel" @click="focusmodel"/>            
             4WD
           </label> -->
             <!-- <span v-if="allerros.model" class="tt"><br>* model is required</span> -->
@@ -63,7 +63,7 @@
            
       </div>
          
-          <button type="submit" class="btn btn-primary" >追加ボタン</button>
+          <button type="button" class="btn btn-danger" :disabled="isdisable">追加ボタン</button>
         </form>
       </div>
     </div>
@@ -97,13 +97,18 @@ export default {
       focus_author: false,
       focus_image: false,
       focus_model: false,
+      btn_disable: false,
       allerros: [],
       success : false,    
       urlPath: "http://localhost:8000/images/",
       url: null
         };
   },
- 
+ computed: {
+    isdisable: function() {
+    return !this.btn_disable;
+    }
+  },
   methods: {
     
       onFileChange(e) {
@@ -119,56 +124,55 @@ export default {
      focusName: function(event) {
         if(this.book.name != ''){
             this.focus_name=false;
-            // this.aggreBtn();
+            this.aggreBtn();
         }
            else{
             this.focus_name=true;
-            // this.btn_disable = true;
+            this.btn_disable = true;
         }
       },
 
       focusauthor: function(event) {
         if(this.book.author != ''){
             this.focus_author=false;
-            // this.aggreBtn();
+            this.aggreBtn();
         }
            else{
             this.focus_author=true;
-            // this.btn_disable = true;
+            this.btn_disable = true;
         }
       },
 
       focusimage: function(event) {
         if(this.book.image != ''){
             this.focus_image=false;
-            // this.aggreBtn();
+            this.aggreBtn();
         }
            else{
             this.focus_image=true;
-            // this.btn_disable = true;
+            this.btn_disable = true;
         }
       },
 
       focusmodel: function(event) {
         if(this.book.model != ''){
             this.focus_model=false;
-            // this.aggreBtn();
+            this.aggreBtn();
         }
            else{
             this.focus_model=true;
-            // this.btn_disable = true;
+            this.btn_disable = true;
         }
       },
-      
 
-    //   aggreBtn: function(){
-    //     if((this.book.name != '')){
-    //         this.btn_disable=false;
-    //     }else{
-    //         this.btn_disable=true;
-    //     }
-    // }, 
     
+    aggreBtn: function(){
+        if( this.book.name != '' && this.book.author != '' && this.book.gender != '' && this.book.model != '' & this.book.image != ''){
+            this.btn_disable=false;
+        }else{
+            this.btn_disable=true;
+        }
+    },
 
     
     addBook() {
@@ -239,5 +243,10 @@ export default {
     font-size: 30px;
     margin-bottom: -15px;
     /* position: absolute; */
+  }
+  .ff{
+    border: 1px solid #4f5c695e;
+    padding: 31px;
+    border-radius: 7px;
   }
 </style>
