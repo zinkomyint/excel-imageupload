@@ -2003,17 +2003,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      errors: {
+        name: "",
+        author: "",
+        image: "",
+        model: ""
+      },
       checkedmodel: [],
       book: {
         name: '',
         author: '',
         gender: '',
         image: '',
-        model: ''
+        model: '',
+        focus_name: false,
+        focus_author: false,
+        focus_image: false,
+        focus_model: false
       },
+      focus_name: false,
+      focus_author: false,
+      focus_image: false,
+      focus_model: false,
       allerros: [],
       success: false,
       urlPath: "http://localhost:8000/images/",
@@ -2030,6 +2054,41 @@ __webpack_require__.r(__webpack_exports__);
       var fileName = e.target.files[0];
       this.$set(this.book, "image", fileName);
     },
+    focusName: function focusName(event) {
+      if (this.book.name != '') {
+        this.focus_name = false; // this.aggreBtn();
+      } else {
+        this.focus_name = true; // this.btn_disable = true;
+      }
+    },
+    focusauthor: function focusauthor(event) {
+      if (this.book.author != '') {
+        this.focus_author = false; // this.aggreBtn();
+      } else {
+        this.focus_author = true; // this.btn_disable = true;
+      }
+    },
+    focusimage: function focusimage(event) {
+      if (this.book.image != '') {
+        this.focus_image = false; // this.aggreBtn();
+      } else {
+        this.focus_image = true; // this.btn_disable = true;
+      }
+    },
+    focusmodel: function focusmodel(event) {
+      if (this.book.model != '') {
+        this.focus_model = false; // this.aggreBtn();
+      } else {
+        this.focus_model = true; // this.btn_disable = true;
+      }
+    },
+    //   aggreBtn: function(){
+    //     if((this.book.name != '')){
+    //         this.btn_disable=false;
+    //     }else{
+    //         this.btn_disable=true;
+    //     }
+    // }, 
     addBook: function addBook() {
       var _this = this;
 
@@ -2267,6 +2326,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2278,6 +2342,8 @@ __webpack_require__.r(__webpack_exports__);
         gender: '',
         model: ''
       },
+      allerros: [],
+      success: false,
       urlPath: "http://localhost:8000/images/",
       url: null
     };
@@ -2339,9 +2405,22 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('image', this.book.image);
       formData.append('hiddenImage', this.book.hiddenImage);
       this.axios.post("http://localhost:8000/api/book/update/".concat(this.$route.params.id), formData, config).then(function (response) {
+        _this2.allerros = [];
+        _this2.book.name = '';
+        _this2.book.author = '';
+        _this2.book.image = '';
+        _this2.book.gender = '';
+        _this2.book.model = '';
+        _this2.success = true;
+
         _this2.$router.push({
           name: "home"
         });
+
+        console.log(response.data);
+      })["catch"](function (error) {
+        _this2.allerros = error.response.data.errors;
+        _this2.success = false;
       });
     }
   }
@@ -6863,7 +6942,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.tt[data-v-14e7738f]{\n  color: red;\n}\n", ""]);
+exports.push([module.i, "\n.tt[data-v-14e7738f]{\n  color: red;\n}\n.nn[data-v-14e7738f]{\n  margin-left: 20px;\n  margin-top: 7px;\n}\n.star[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  position: absolute;\n}\n.star2[data-v-14e7738f]{\n  color: red;\n  font-size: 30px;\n  margin-bottom: -15px;\n  /* position: absolute; */\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.tt[data-v-2913dbfe]{\n  color: red;\n}\n", ""]);
 
 // exports
 
@@ -38183,6 +38281,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -39257,13 +39385,13 @@ var render = function() {
                 _c(
                   "router-link",
                   { staticClass: "nav-item nav-link", attrs: { to: "/" } },
-                  [_vm._v("Home")]
+                  [_vm._v("ホーム")]
                 ),
                 _vm._v(" "),
                 _c(
                   "router-link",
                   { staticClass: "nav-item nav-link", attrs: { to: "/add" } },
-                  [_vm._v("Add Book")]
+                  [_vm._v("ページを追加")]
                 )
               ],
               1
@@ -39292,7 +39420,9 @@ var staticRenderFns = [
       },
       [
         _c("span", { staticClass: "text-secondary" }, [
-          _vm._v("Laravel & Vue CRUD Single Page Application (SPA) Tutorial")
+          _vm._v(
+            "Laravel＆Vue CRUD シングルページアプリケーション（SPA）チュートリアル"
+          )
         ])
       ]
     )
@@ -39320,18 +39450,484 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [_vm._v("Add Book")]),
+    _c("h3", { staticClass: "text-center" }, [_vm._v("ページを追加")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _c(
           "form",
           {
-            attrs: { enctype: "multipart/form-data", method: "POST" },
+            attrs: {
+              enctype: "multipart/form-data",
+              method: "POST",
+              autocomplete: "off"
+            },
             on: {
               submit: function($event) {
                 $event.preventDefault()
                 return _vm.addBook($event)
+              }
+            }
+          },
+          [
+            _c("p", { staticClass: "star" }, [_vm._v("*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "nn" }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.name,
+                    expression: "book.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "name" },
+                domProps: { value: _vm.book.name },
+                on: {
+                  focusout: _vm.focusName,
+                  keyup: _vm.focusName,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.book, "name", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.focus_name
+                ? _c("span", { staticClass: "error m-l-30 tt" }, [
+                    _vm._v("※入力は必須です。")
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "star" }, [_vm._v("*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "nn" }, [_vm._v("Author")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.author,
+                    expression: "book.author"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "author" },
+                domProps: { value: _vm.book.author },
+                on: {
+                  focusout: _vm.focusauthor,
+                  keyup: _vm.focusauthor,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.book, "author", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.focus_author
+                ? _c("span", { staticClass: "error m-l-30 tt" }, [
+                    _vm._v("※入力は必須です。")
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "star" }, [_vm._v("*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "nn" }, [_vm._v("Image")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", id: "image" },
+                on: {
+                  change: [_vm.changeImage, _vm.onFileChange],
+                  focusout: _vm.focusimage,
+                  keyup: _vm.focusimage
+                }
+              }),
+              _c("br"),
+              _vm._v(" "),
+              _vm.url
+                ? _c("img", { attrs: { src: _vm.url, width: "20%" } })
+                : _vm._e(),
+              _c("br"),
+              _vm._v(" "),
+              _vm.focus_image
+                ? _c("span", { staticClass: "error m-l-30 tt" }, [
+                    _vm._v("※入力は必須です。")
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "star2" }, [_vm._v("*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "male", value: "male" },
+                domProps: { checked: _vm._q(_vm.book.gender, "male") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "male")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "male" } }, [_vm._v("male")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.gender,
+                    expression: "book.gender"
+                  }
+                ],
+                attrs: { type: "radio", id: "female", value: "female" },
+                domProps: { checked: _vm._q(_vm.book.gender, "female") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.book, "gender", "female")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "female" } }, [_vm._v("female")]),
+              _vm._v(" "),
+              _vm.allerros.gender
+                ? _c("span", { staticClass: "tt" }, [
+                    _c("br"),
+                    _vm._v("※入力は必須です。")
+                  ])
+                : _c("span"),
+              _vm._v(" "),
+              _c("br")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "star2" }, [_vm._v("*")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                staticStyle: { "margin-left": "22px" }
+              },
+              [
+                _c(
+                  "label",
+                  {
+                    staticClass: "pakainfo form-check-label gst",
+                    attrs: { for: "2WD" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.checkedmodel,
+                          expression: "checkedmodel"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "checkbox", id: "2WD", value: "2WD" },
+                      domProps: {
+                        checked: Array.isArray(_vm.checkedmodel)
+                          ? _vm._i(_vm.checkedmodel, "2WD") > -1
+                          : _vm.checkedmodel
+                      },
+                      on: {
+                        click: _vm.focusmodel,
+                        change: function($event) {
+                          var $$a = _vm.checkedmodel,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = "2WD",
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkedmodel = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checkedmodel = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v("            \n          2WD\n      ")
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.focus_model
+                  ? _c("span", { staticClass: "error m-l-30 tt" })
+                  : _vm.focus_model == false
+                  ? _c("span", { staticClass: "error m-l-30 tt" }, [
+                      _vm._v("※入力は必須です。")
+                    ])
+                  : _vm._e()
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("追加ボタン")]
+            )
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllBooks.vue?vue&type=template&id=55b88318&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllBooks.vue?vue&type=template&id=55b88318& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h3", { staticClass: "text-center" }, [_vm._v("ホームページ")]),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "download-excel",
+        {
+          staticClass: "btn btn-default",
+          staticStyle: { "margin-left": "-12px" },
+          attrs: {
+            data: _vm.json_data,
+            fields: _vm.json_fields,
+            worksheet: "My Worksheet",
+            name: "book.xls"
+          }
+        },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              attrs: { type: "button" },
+              on: { click: _vm.exportBookData }
+            },
+            [_vm._v("\n            エクセルエクスポート\n        ")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("table", { staticClass: "table table-bordered" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v("ID")]),
+            _vm._v(" "),
+            _c("th", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.checkedNames,
+                    expression: "checkedNames"
+                  }
+                ],
+                attrs: { type: "checkbox", id: "name", value: "name" },
+                domProps: {
+                  checked: Array.isArray(_vm.checkedNames)
+                    ? _vm._i(_vm.checkedNames, "name") > -1
+                    : _vm.checkedNames
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.checkedNames,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "name",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.checkedNames = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.checkedNames = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.checkedNames = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v("名前")
+            ]),
+            _vm._v(" "),
+            _c("th", [_vm._v("著者")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("性別")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("モデル")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("モデル")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("作成日")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("更新日")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("行動")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.books, function(book) {
+            return _c("tr", { key: book.id }, [
+              _c("td", [_vm._v(_vm._s(book.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.author))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.gender))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.model))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("img", {
+                  staticClass: "img-thumbnail",
+                  attrs: {
+                    src: _vm.urlPath + book.image,
+                    alt: "image",
+                    width: "75"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.created_at))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(book.updated_at))]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "div",
+                  { staticClass: "btn-group", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { to: { name: "edit", params: { id: book.id } } }
+                      },
+                      [_vm._v("編集\n                    ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        staticStyle: { "margin-left": "3px" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteBook(book.id)
+                          }
+                        }
+                      },
+                      [_vm._v("削除")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v("Checked names: " + _vm._s(_vm._f("json")(_vm.checkedNames)))
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit Book")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c(
+          "form",
+          {
+            attrs: { enctype: "multipart/form-data" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.updateBook($event)
               }
             }
           },
@@ -39403,21 +39999,33 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _c("label", [_vm._v("Image")]),
               _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "preview",
+                attrs: { src: _vm.imageData }
+              }),
+              _vm._v(" "),
               _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "file", id: "image" },
+                attrs: { type: "file" },
                 on: { change: [_vm.changeImage, _vm.onFileChange] }
               }),
-              _c("br"),
               _vm._v(" "),
               _vm.url
                 ? _c("img", { attrs: { src: _vm.url, width: "20%" } })
-                : _vm._e(),
-              _c("br"),
+                : _c("img", {
+                    staticClass: "img-thumbnail",
+                    attrs: {
+                      src: _vm.urlPath + _vm.book.image,
+                      alt: "image",
+                      width: "100",
+                      id: "image"
+                    }
+                  }),
               _vm._v(" "),
               _vm.allerros.image
                 ? _c("span", { staticClass: "tt" }, [
-                    _vm._v("image is required")
+                    _vm._v("Image is required")
                   ])
                 : _vm._e()
             ]),
@@ -39467,8 +40075,7 @@ var render = function() {
               _vm._v(" "),
               _vm.allerros.gender
                 ? _c("span", { staticClass: "tt" }, [
-                    _c("br"),
-                    _vm._v("gender is required")
+                    _vm._v("Gender is required")
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -39577,478 +40184,9 @@ var render = function() {
               _vm._v(" "),
               _vm.allerros.model
                 ? _c("span", { staticClass: "tt" }, [
-                    _c("br"),
-                    _vm._v("* model is required")
+                    _vm._v("Model is required")
                   ])
                 : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm.success
-              ? _c("span", [_vm._v("Record submitted successfully!")])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [_vm._v("Add Book")]
-            )
-          ]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllBooks.vue?vue&type=template&id=55b88318&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllBooks.vue?vue&type=template&id=55b88318& ***!
-  \***********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h3", { staticClass: "text-center" }, [_vm._v("All Books")]),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "download-excel",
-        {
-          staticClass: "btn btn-default",
-          staticStyle: { "margin-left": "-12px" },
-          attrs: {
-            data: _vm.json_data,
-            fields: _vm.json_fields,
-            worksheet: "My Worksheet",
-            name: "book.xls"
-          }
-        },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              attrs: { type: "button" },
-              on: { click: _vm.exportBookData }
-            },
-            [_vm._v("\n            Export\n        ")]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("table", { staticClass: "table table-bordered" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", [_vm._v("ID")]),
-            _vm._v(" "),
-            _c("th", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.checkedNames,
-                    expression: "checkedNames"
-                  }
-                ],
-                attrs: { type: "checkbox", id: "name", value: "name" },
-                domProps: {
-                  checked: Array.isArray(_vm.checkedNames)
-                    ? _vm._i(_vm.checkedNames, "name") > -1
-                    : _vm.checkedNames
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.checkedNames,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = "name",
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.checkedNames = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.checkedNames = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.checkedNames = $$c
-                    }
-                  }
-                }
-              }),
-              _vm._v("Name")
-            ]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Author")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Gender")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Model")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Image")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Created At")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Updated At")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Actions")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.books, function(book) {
-            return _c("tr", { key: book.id }, [
-              _c("td", [_vm._v(_vm._s(book.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.name))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.author))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.gender))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.model))]),
-              _vm._v(" "),
-              _c("td", [
-                _c("img", {
-                  staticClass: "img-thumbnail",
-                  attrs: {
-                    src: _vm.urlPath + book.image,
-                    alt: "image",
-                    width: "75"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.created_at))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(book.updated_at))]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { to: { name: "edit", params: { id: book.id } } }
-                      },
-                      [_vm._v("Edit\n                    ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        staticStyle: { "margin-left": "3px" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteBook(book.id)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("span", [
-        _vm._v("Checked names: " + _vm._s(_vm._f("json")(_vm.checkedNames)))
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe& ***!
-  \***********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit Book")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c(
-          "form",
-          {
-            attrs: { enctype: "multipart/form-data" },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.updateBook($event)
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Name")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.name,
-                    expression: "book.name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.book.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.book, "name", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Author")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.author,
-                    expression: "book.author"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.book.author },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.book, "author", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Image")]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "preview",
-                attrs: { src: _vm.imageData }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "file" },
-                on: { change: [_vm.changeImage, _vm.onFileChange] }
-              }),
-              _vm._v(" "),
-              _vm.url
-                ? _c("img", { attrs: { src: _vm.url, width: "20%" } })
-                : _c("img", {
-                    staticClass: "img-thumbnail",
-                    attrs: {
-                      src: _vm.urlPath + _vm.book.image,
-                      alt: "image",
-                      width: "100"
-                    }
-                  })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.gender,
-                    expression: "book.gender"
-                  }
-                ],
-                attrs: { type: "radio", id: "male", value: "male" },
-                domProps: { checked: _vm._q(_vm.book.gender, "male") },
-                on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.book, "gender", "male")
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "male" } }, [_vm._v("male")]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.gender,
-                    expression: "book.gender"
-                  }
-                ],
-                attrs: { type: "radio", id: "female", value: "female" },
-                domProps: { checked: _vm._q(_vm.book.gender, "female") },
-                on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.book, "gender", "female")
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "female" } }, [_vm._v("female")]),
-              _vm._v(" "),
-              _c("br")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "pakainfo form-check-label gst",
-                  attrs: { for: "2WD" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.checkedmodel,
-                        expression: "checkedmodel"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "checkbox", id: "2WD", value: "2WD" },
-                    domProps: {
-                      checked: Array.isArray(_vm.checkedmodel)
-                        ? _vm._i(_vm.checkedmodel, "2WD") > -1
-                        : _vm.checkedmodel
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.checkedmodel,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "2WD",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.checkedmodel = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.checkedmodel = $$c
-                        }
-                      }
-                    }
-                  }),
-                  _vm._v("            \n          2WD\n      ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "pakainfo form-check-label gst",
-                  staticStyle: { "margin-left": "25px" },
-                  attrs: { for: "4WD" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.checkedmodel,
-                        expression: "checkedmodel"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "checkbox", id: "4WD", value: "4WD" },
-                    domProps: {
-                      checked: Array.isArray(_vm.checkedmodel)
-                        ? _vm._i(_vm.checkedmodel, "4WD") > -1
-                        : _vm.checkedmodel
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.checkedmodel,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "4WD",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.checkedmodel = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.checkedmodel = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.checkedmodel = $$c
-                        }
-                      }
-                    }
-                  }),
-                  _vm._v("            \n          4WD\n        ")
-                ]
-              )
             ]),
             _vm._v(" "),
             _c(
@@ -55601,9 +55739,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditBook.vue?vue&type=template&id=2913dbfe& */ "./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&");
+/* harmony import */ var _EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditBook.vue?vue&type=template&id=2913dbfe&scoped=true& */ "./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true&");
 /* harmony import */ var _EditBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditBook.vue?vue&type=script&lang=js& */ "./resources/js/components/EditBook.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& */ "./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -55611,13 +55751,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _EditBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "2913dbfe",
   null
   
 )
@@ -55643,19 +55783,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=style&index=0&id=2913dbfe&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_style_index_0_id_2913dbfe_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true& ***!
+  \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditBook.vue?vue&type=template&id=2913dbfe& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditBook.vue?vue&type=template&id=2913dbfe&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditBook.vue?vue&type=template&id=2913dbfe&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditBook_vue_vue_type_template_id_2913dbfe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

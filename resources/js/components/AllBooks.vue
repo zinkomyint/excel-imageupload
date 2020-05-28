@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center">All Books</h3><br/>
+        <h3 class="text-center">ホームページ</h3><br/>
          <download-excel style="margin-left:-12px;"
             class="btn btn-default"
             :data="json_data"
@@ -13,7 +13,7 @@
                 class="btn btn-success"
                 @click="exportBookData"
             >
-                Export
+                エクセルエクスポート
             </button>
         </download-excel>
 
@@ -22,14 +22,14 @@
             <thead>
             <tr>
               <th>ID</th>
-                <th><input type="checkbox" id="name" value="name" v-model="checkedNames">Name</th>
-                <th>Author</th>
-                <th>Gender</th>
-                <th>Model</th>
-                <th>Image</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
+                <th><input type="checkbox" id="name" value="name" v-model="checkedNames">名前</th>
+                <th>著者</th>
+                <th>性別</th>
+                <th>モデル</th>
+                <th>モデル</th>
+                <th>作成日</th>
+                <th>更新日</th>
+                <th>行動</th>
             </tr>
             </thead>
             <tbody>
@@ -44,9 +44,9 @@
                 <td>{{ book.updated_at }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <router-link :to="{name: 'edit', params: { id: book.id }}" class="btn btn-primary">Edit
+                        <router-link :to="{name: 'edit', params: { id: book.id }}" class="btn btn-primary">編集
                         </router-link>
-                        <button class="btn btn-danger" @click="deleteBook(book.id)" style="margin-left: 3px;">Delete</button>
+                        <button class="btn btn-danger" @click="deleteBook(book.id)" style="margin-left: 3px;">削除</button>
                     </div>
                 </td>
             </tr>

@@ -6,11 +6,13 @@
         <form @submit.prevent="updateBook" enctype="multipart/form-data">
           <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" v-model="book.name" />
+            <input type="text" class="form-control" v-model="book.name" id="name"/>
+               <span v-if="allerros.name" class="tt">Name is required</span>
           </div>
           <div class="form-group">
             <label>Author</label>
-            <input type="text" class="form-control" v-model="book.author" />
+            <input type="text" class="form-control" v-model="book.author" id="author"/>
+               <span v-if="allerros.author" class="tt">Author is required</span>
           </div>
           <div class="form-group">
             <label>Image</label>
@@ -18,7 +20,8 @@
             <img class="preview" :src="imageData">
             <input type="file" v-on:change="changeImage" @change="onFileChange"/>
               <img v-if="url" :src="url" width="20%" />
-            <img v-else :src="urlPath + book.image" alt="image" class="img-thumbnail" width="100"/>
+            <img v-else :src="urlPath + book.image" alt="image" class="img-thumbnail" width="100" id="image"/>
+               <span v-if="allerros.image" class="tt">Image is required</span>
             </div>
       <div class="form-group">
              <input type="radio" id="male" value="male" v-model="book.gender">
@@ -26,13 +29,14 @@
                 <br>
           <input type="radio" id="female" value="female" v-model="book.gender">
             <label for="female">female</label>
+               <span v-if="allerros.gender" class="tt">Gender is required</span>
                 <br>
       </div>
 
          <div class="form-group">
           <label for="2WD" class="pakainfo form-check-label gst">
             <input type="checkbox" 
-                    id="2WD" 
+                    id="model" 
                     class="form-check-input"
                     value="2WD" 
                     v-model="checkedmodel"/>            
@@ -40,12 +44,13 @@
         </label>
              <label for="4WD" class="pakainfo form-check-label gst" style="margin-left:25px">
             <input type="checkbox" 
-                    id="4WD" 
+                    id="model" 
                     class="form-check-input"
                     value="4WD" 
                     v-model="checkedmodel"/>            
             4WD
           </label>
+             <span v-if="allerros.model" class="tt">Model is required</span>
       </div>
 
           <button type="submit" class="btn btn-primary">Update Book</button>
@@ -67,8 +72,10 @@ export default {
            gender : '',
            model : '',
            },
+      allerros: [],
+      success : false,    
       urlPath: "http://localhost:8000/images/",
-       url: null,
+      url: null,
     };
   },
   created() {
@@ -130,9 +137,29 @@ export default {
           formData , config
         )
         .then(response => {
-          this.$router.push({ name: "home" });
-        });
+           this.allerros = [];
+                    this.book.name = '';
+                    this.book.author = '';
+                    this.book.image = '';
+                    this.book.gender = '';
+                    this.book.model = '';
+                   
+                    this.success = true;
+            
+            this.$router.push({ name: "home" })
+            console.log(response.data)
+        })  .catch((error) => {
+                         this.allerros = error.response.data.errors;
+                         this.success = false;
+                    });
     }
   }
 };
 </script>
+
+<style scoped>
+  .tt{
+    color: red;
+  }
+</style>
+

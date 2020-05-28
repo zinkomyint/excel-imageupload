@@ -70,6 +70,13 @@ class BookController extends Controller
     // update book
     public function update($id, Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'author' => 'required',
+            'image' => 'required',
+            'gender' => 'required',
+            'model' => 'required',
+        ]);
         
         if($request->hiddenImage == "")
         {
